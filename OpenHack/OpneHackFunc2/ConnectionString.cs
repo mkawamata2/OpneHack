@@ -6,7 +6,7 @@ namespace OpneHackFunc2
 {
     public class ConnectionString
     {
-        public string Value
+        public static string Value
         {
             get
             {
