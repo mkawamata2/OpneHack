@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json.schemastore.org/proxies",
+  "proxies": {
+    "task4": {
+      "matchCondition": {
+        "route": "/openhack-19/task4/{functionNameAndQueryParameter}"
+      },
+      "backendUri": "https://task2-api-evaluation.azurewebsites.net/api/{functionNameAndQueryParameter}"
+    }
+  }
+}
