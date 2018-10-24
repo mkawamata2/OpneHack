@@ -31,7 +31,7 @@ namespace OpneHackFunc2
             var getUserResult = await httpClient1.GetAsync($"api/GetUser?userId={requestBody.UserId}");
             if (getUserResult.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                return new BadRequestObjectResult($"userId:{requestBody.UserId} is invalid.");
+                return new BadRequestObjectResult($"userId:{requestBody.UserId} is invalid！！！！！！！");
             }
 
             // 既存の API を呼び出して productId を検証します。
