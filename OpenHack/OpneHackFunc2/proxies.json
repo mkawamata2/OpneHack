@@ -9,15 +9,15 @@
     },
     "task4-GetProduct": {
       "matchCondition": {
-        "route": "/openhack-19/task4/GetProduct{param}"
+        "route": "/openhack-19/task4/GetProduct/{productId}"
       },
-      "backendUri": "https://serverlessohlondonproduct.azurewebsites.net/api/GetProduct{param}"
+      "backendUri": "https://serverlessohlondonproduct.azurewebsites.net/api/GetProduct?productId={productId}"
     },
     "task4-GetUser": {
       "matchCondition": {
-        "route": "/openhack-19/task4/GetUser{param}"
+        "route": "/openhack-19/task4/GetUser/{userId}"
       },
-      "backendUri": "https://serverlessohlondonuser.azurewebsites.net/api/GetUser{param}"
+      "backendUri": "https://serverlessohlondonuser.azurewebsites.net/api/GetUser?userId={userId}"
     },
     "task4": {
       "matchCondition": {
