@@ -33,7 +33,7 @@ namespace OpneHackFunc2
 
             if (result == null)
             {
-                return new NotFoundObjectResult("No data...");
+                return new NotFoundObjectResult("No data......");
             }
 
             var jsonResult = JsonConvert.SerializeObject(result);
