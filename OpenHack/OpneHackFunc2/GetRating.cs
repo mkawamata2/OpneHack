@@ -29,7 +29,7 @@ namespace OpneHackFunc2
             IMongoDatabase database = client.GetDatabase("Rating");
             IMongoCollection<RatingInfo> collection = database.GetCollection<RatingInfo>("id");
 
-            var result = collection.Find(new BsonDocument { { "id", ratingId } }).FirstOrDefault();
+            var result = collection.Find(new BsonDocument { { "id", new Guid(ratingId) } }).FirstOrDefault();
             var jsonResult = result.ToJson();
             log.LogInformation(jsonResult);
 
