@@ -1,12 +1,14 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace OpneHackFunc2
 {
@@ -19,15 +21,22 @@ namespace OpneHackFunc2
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+            string userId = req.Query["userId"];
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            MongoClient client = new MongoClient(ConnectionString.Value);
+            IMongoDatabase database = client.GetDatabase("Rating");
+            IMongoCollection<RatingInfo> collection = database.GetCollection<RatingInfo>("id");
 
-            return name != null
-                ? (ActionResult)new OkObjectResult($"Hello, {name}")
-                : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+            var result = collection.Find(new BsonDocument { { "userId", new Guid(userId) } }).ToList();
+            if (result.Count == 0)
+            {
+                return new NotFoundObjectResult("No data...");
+            }
+
+            var jsonResult = result.ToJson();
+            log.LogInformation(jsonResult);
+
+            return (ActionResult)new OkObjectResult(jsonResult);
         }
     }
 }
