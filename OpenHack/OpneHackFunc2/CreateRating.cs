@@ -15,29 +15,32 @@ namespace OpneHackFunc2
 {
     public static class CreateRating
     {
-        private const string BaseUrl = "https://serverlessohlondonuser.azurewebsites.net/";
-
         [FunctionName("CreateRating")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]
             CreateRatingIn requestBody,
             ILogger log)
         {
-            HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri(BaseUrl);
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(
+            HttpClient httpClient1 = new HttpClient();
+            httpClient1.BaseAddress = new Uri("https://serverlessohlondonuser.azurewebsites.net/");
+            httpClient1.DefaultRequestHeaders.Accept.Clear();
+            httpClient1.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
             // 既存の API を呼び出して userId を検証します。
-            var getUserResult = await httpClient.GetAsync($"api/GetUser?userId={requestBody.UserId}");
+            var getUserResult = await httpClient1.GetAsync($"api/GetUser?userId={requestBody.UserId}");
             if (getUserResult.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 return new BadRequestObjectResult($"userId:{requestBody.UserId} is invalid.");
             }
 
             // 既存の API を呼び出して productId を検証します。
-            var getProductResult = await httpClient.GetAsync($"api/GetProduct?productid={requestBody.ProductId}");
+            HttpClient httpClient2 = new HttpClient();
+            httpClient2.BaseAddress = new Uri("https://serverlessohlondonproduct.azurewebsites.net/");
+            httpClient2.DefaultRequestHeaders.Accept.Clear();
+            httpClient2.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            var getProductResult = await httpClient2.GetAsync($"api/GetProduct?productid=4c25613a-a3c2-4ef3-8e02-9c335eb23204");
             if (getProductResult.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 return new BadRequestObjectResult($"productId:{requestBody.ProductId} is invalid.");
