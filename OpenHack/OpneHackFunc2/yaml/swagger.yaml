@@ -1,0 +1,112 @@
+﻿openapi: 3.0.1
+info:
+  title: defaultTitle
+  description: defaultDescription
+  version: '0.1'
+servers:
+  - url: 'https://task2-api-evaluation.azurewebsites.net'
+paths:
+  /openhack-19/task4/GetRating:
+    get:
+      description: Auto generated using Swagger Inspector
+      parameters:
+        - name: ratingId
+          in: query
+          schema:
+            type: string
+          example: 5c54e99d-0765-4487-8258-afccc533c366
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            text/plain; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /openhack-19/task4/GetProducts:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /openhack-19/task4/GetRatings:
+    get:
+      description: Auto generated using Swagger Inspector
+      parameters:
+        - name: userId
+          in: query
+          schema:
+            type: string
+          example: cc20a6fb-a91f-4192-874d-132493685376
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            text/plain; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /openhack-19/task4/GetProduct/75542e38-563f-436f-adeb-f426f1dabb5c:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /openhack-19/task4/GetUser/cc20a6fb-a91f-4192-874d-132493685376:
+    get:
+      description: Auto generated using Swagger Inspector
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+  /openhack-19/task4/CreateRating:
+    post:
+      description: Auto generated using Swagger Inspector
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                locationName:
+                  type: string
+                productId:
+                  type: string
+                rating:
+                  type: integer
+                userId:
+                  type: string
+                userNotes:
+                  type: string
+            examples:
+              '0':
+                value: |-
+                  {
+                     "userId": "cc20a6fb-a91f-4192-874d-132493685376",
+                     "productId": "4c25613a-a3c2-4ef3-8e02-9c335eb23204",
+                     "locationName": "Sample ice cream shop",
+                     "rating": 5,
+                     "userNotes": "I love the subtle notes of orange in this ice cream!"
+                  }
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
