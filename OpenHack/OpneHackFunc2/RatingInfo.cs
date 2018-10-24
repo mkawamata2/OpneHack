@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace OpneHackFunc2
 {
+    [JsonObject]
     public class RatingInfo
     {
         [BsonId(IdGenerator = typeof(BsonObjectIdGenerator))]
