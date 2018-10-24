@@ -40,7 +40,7 @@ namespace OpneHackFunc2
             httpClient2.DefaultRequestHeaders.Accept.Clear();
             httpClient2.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-            var getProductResult = await httpClient2.GetAsync($"api/GetProduct?productid=4c25613a-a3c2-4ef3-8e02-9c335eb23204");
+            var getProductResult = await httpClient2.GetAsync($"api/GetProduct?productid={requestBody.ProductId}");
             if (getProductResult.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 return new BadRequestObjectResult($"productId:{requestBody.ProductId} is invalid.");
