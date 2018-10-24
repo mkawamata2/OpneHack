@@ -1,17 +1,23 @@
 {
   "$schema": "http://json.schemastore.org/proxies",
   "proxies": {
+    "task4-GetProducts": {
+      "matchCondition": {
+        "route": "/openhack-19/task4/GetProducts"
+      },
+      "backendUri": "https://serverlessohlondonproduct.azurewebsites.net/api/GetProducts"
+    },
+    "task4-GetProduct": {
+      "matchCondition": {
+        "route": "/openhack-19/task4/GetProduct{param}"
+      },
+      "backendUri": "https://serverlessohlondonproduct.azurewebsites.net/api/GetProduct{param}"
+    },
     "task4-GetUser": {
       "matchCondition": {
-        "route": "/openhack-19/task4/GetUser?{param}"
+        "route": "/openhack-19/task4/GetUser{param}"
       },
-      "backendUri": "https://serverlessohlondonuser.azurewebsites.net/api/GetUser?{param}"
-    },
-    "task4-GetProductAndProducts": {
-      "matchCondition": {
-        "route": "/openhack-19/task4/{functionNameAndQueryParameter}"
-      },
-      "backendUri": "https://serverlessohlondonproduct.azurewebsites.net/api/{functionNameAndQueryParameter}"
+      "backendUri": "https://serverlessohlondonuser.azurewebsites.net/api/GetUser{param}"
     },
     "task4": {
       "matchCondition": {
