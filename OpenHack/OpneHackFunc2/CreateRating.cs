@@ -7,18 +7,42 @@ using MongoDB.Driver;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace OpneHackFunc2
 {
     public static class CreateRating
     {
+        private const string BaseUrl = "https://serverlessohlondonuser.azurewebsites.net/";
+
         [FunctionName("CreateRating")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]
             CreateRatingIn requestBody,
             ILogger log)
         {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(BaseUrl);
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // 既存の API を呼び出して userId を検証します。
+            var getUserResult = await httpClient.GetAsync($"api/GetUser?userId={requestBody.UserId}");
+            if (getUserResult.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return new BadRequestObjectResult($"userId:{requestBody.UserId} is invalid.");
+            }
+
+            // 既存の API を呼び出して productId を検証します。
+            var getProductResult = await httpClient.GetAsync($"api/GetProduct?productid={requestBody.ProductId}");
+            if (getProductResult.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return new BadRequestObjectResult($"productId:{requestBody.ProductId} is invalid.");
+            }
+
             MongoClient client = new MongoClient(ConnectionString.Value);
 
             // DB名を指定して、DBを取得
