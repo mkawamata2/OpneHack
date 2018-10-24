@@ -30,6 +30,12 @@ namespace OpneHackFunc2
             IMongoCollection<RatingInfo> collection = database.GetCollection<RatingInfo>("id");
 
             var result = collection.Find(new BsonDocument { { "id", new Guid(ratingId) } }).FirstOrDefault();
+
+            if (result == null)
+            {
+                return new NotFoundObjectResult("No data...");
+            }
+
             var jsonResult = result.ToJson();
             log.LogInformation(jsonResult);
 
