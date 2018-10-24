@@ -55,7 +55,7 @@ namespace OpneHackFunc2
                 UserId = new Guid(requestBody.UserId),
                 ProductId = new Guid(requestBody.ProductId),
                 LocationName = requestBody.LocationName,
-                Timestamp = DateTimeOffset.UtcNow,
+                Timestamp = DateTimeOffset.UtcNow.ToString(),
                 Rating = requestBody.Rating,
                 UserNotes = requestBody.UserNotes
             };

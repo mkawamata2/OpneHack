@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -7,6 +8,9 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using MongoDB.Driver;
+using MongoDB.Bson;
+using MongoDB.Driver.Linq;
 
 namespace OpneHackFunc2
 {
@@ -19,15 +23,17 @@ namespace OpneHackFunc2
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
+            string ratingId = req.Query["ratingId"];
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            MongoClient client = new MongoClient(ConnectionString.Value);
+            IMongoDatabase database = client.GetDatabase("Rating");
+            IMongoCollection<RatingInfo> collection = database.GetCollection<RatingInfo>("id");
 
-            return name != null
-                ? (ActionResult)new OkObjectResult($"Hello, {name}")
-                : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+            var result = collection.Find(new BsonDocument { { "id", ratingId } }).FirstOrDefault();
+            var jsonResult = result.ToJson();
+            log.LogInformation(jsonResult);
+
+            return (ActionResult)new OkObjectResult(jsonResult);
         }
     }
 }
