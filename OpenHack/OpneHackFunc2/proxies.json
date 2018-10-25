@@ -27,9 +27,9 @@
     },
     "task4-GetRating": {
       "matchCondition": {
-        "route": "/openhack-19/task4/GetRating/{productId}"
+        "route": "/openhack-19/task4/GetRating/{ratingId}"
       },
-      "backendUri": "https://task2-api-evaluation.azurewebsites.net/api/GetRating?productId={productId}"
+      "backendUri": "https://task2-api-evaluation.azurewebsites.net/api/GetRating?ratingId={ratingId}"
     },
     "task4-GetRatings": {
       "matchCondition": {
