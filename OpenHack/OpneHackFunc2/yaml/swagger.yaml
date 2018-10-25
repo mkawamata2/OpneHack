@@ -1,28 +1,49 @@
 ﻿openapi: 3.0.1
 info:
-  title: defaultTitle
-  description: defaultDescription
+  title: OpenHack-19-task4
+  description: OpenHack is fun.
   version: '0.1'
 servers:
   - url: 'https://task2-api-evaluation.azurewebsites.net'
 paths:
-  /openhack-19/task4/GetRating:
+  /openhack-19/task4/GetProduct/{productId}:
+    get:
+      description: Get a product data. The response format is JSON.
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "ID of a product"
+        required: true
+        schema:
+          type: "string"
+          format: "xxxxxxxx-xxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      responses:
+        '200':
+          description: Successed to get a product.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /openhack-19/task4/GetRatings/{ratingId}:
     get:
       description: Auto generated using Swagger Inspector
       parameters:
-        - name: ratingId
-          in: query
-          schema:
-            type: string
-          example: 5c54e99d-0765-4487-8258-afccc533c366
+      - name: "ratingId"
+        in: "path"
+        description: "ID of a rating"
+        required: true
+        schema:
+          type: "string"
+          format: "xxxxxxxx-xxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
       responses:
         '200':
-          description: Auto generated using Swagger Inspector
+          description: Successed to get ratings that the user evaluated.
           content:
             text/plain; charset=utf-8:
               schema:
-                type: string
-              examples: {}
+                type: array
+                items:
+                  $ref: '#/components/schemas/RatingResponse'
   /openhack-19/task4/GetProducts:
     get:
       description: Auto generated using Swagger Inspector
@@ -32,47 +53,29 @@ paths:
           content:
             application/json; charset=utf-8:
               schema:
-                type: string
-              examples: {}
-  /openhack-19/task4/GetRatings:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /openhack-19/task4/GetUser/{userId}:
     get:
       description: Auto generated using Swagger Inspector
       parameters:
-        - name: userId
-          in: query
-          schema:
-            type: string
-          example: cc20a6fb-a91f-4192-874d-132493685376
-      responses:
-        '200':
-          description: Auto generated using Swagger Inspector
-          content:
-            text/plain; charset=utf-8:
-              schema:
-                type: string
-              examples: {}
-  /openhack-19/task4/GetProduct/75542e38-563f-436f-adeb-f426f1dabb5c:
-    get:
-      description: Auto generated using Swagger Inspector
+      - name: "userId"
+        in: "path"
+        description: "ID of an user"
+        required: true
+        schema:
+          type: "string"
+          format: "xxxxxxxx-xxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
       responses:
         '200':
           description: Auto generated using Swagger Inspector
           content:
             application/json; charset=utf-8:
               schema:
-                type: string
-              examples: {}
-  /openhack-19/task4/GetUser/cc20a6fb-a91f-4192-874d-132493685376:
-    get:
-      description: Auto generated using Swagger Inspector
-      responses:
-        '200':
-          description: Auto generated using Swagger Inspector
-          content:
-            application/json; charset=utf-8:
-              schema:
-                type: string
-              examples: {}
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
   /openhack-19/task4/CreateRating:
     post:
       description: Auto generated using Swagger Inspector
@@ -80,27 +83,16 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                locationName:
-                  type: string
-                productId:
-                  type: string
-                rating:
-                  type: integer
-                userId:
-                  type: string
-                userNotes:
-                  type: string
+              $ref: '#/components/schemas/RatingRequest'
             examples:
               '0':
                 value: |-
                   {
-                     "userId": "cc20a6fb-a91f-4192-874d-132493685376",
-                     "productId": "4c25613a-a3c2-4ef3-8e02-9c335eb23204",
-                     "locationName": "Sample ice cream shop",
-                     "rating": 5,
-                     "userNotes": "I love the subtle notes of orange in this ice cream!"
+                    "userId": "cc20a6fb-a91f-4192-874d-132493685376",
+                    "productId": "4c25613a-a3c2-4ef3-8e02-9c335eb23204",
+                    "locationName": "tokyo tabloid",
+                    "rating": 5,
+                    "userNotes": "I love the subtle notes of orange in this ice cream!"
                   }
       responses:
         '200':
@@ -108,5 +100,87 @@ paths:
           content:
             application/json; charset=utf-8:
               schema:
-                type: string
-              examples: {}
+                $ref: '#/components/schemas/RatingResponse'
+  /openhack-19/task4/GetRating/{ratingId}:
+    get:
+      description: Auto generated using Swagger Inspector
+      parameters:
+      - name: "ratingId"
+        in: "path"
+        description: "ID of a rating"
+        required: true
+        schema:
+          type: "string"
+          format: "xxxxxxxx-xxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      responses:
+        '200':
+          description: Auto generated using Swagger Inspector
+          content:
+            text/plain; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/RatingResponse'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: "cc20a6fb-a91f-4192-874d-132493685376"
+        userName:
+          type: string
+          example: "doreen.riddle"
+        fullName:
+          type: string
+          example: "Doreen Riddle"
+    Product:
+      type: object
+      properties:
+        productId:
+          type: string
+          example: "4c25613a-a3c2-4ef3-8e02-9c335eb23204"
+        productName:
+          type: string
+          example: "Truly Orange-inal"
+        productDescription:
+          type: string
+          example: "Made from concentrate."
+    RatingRequest:
+      type: object
+      properties:
+        locationName:
+          type: string
+          example: "tokyo tabloid"
+        productId:
+          type: string
+          example: "4c25613a-a3c2-4ef3-8e02-9c335eb23204"
+        rating:
+          type: integer
+          example: 5
+        userId:
+          type: string
+          example: "cc20a6fb-a91f-4192-874d-132493685376"
+        userNotes:
+          type: string
+          example: "this is note."
+      xml:
+        name: Rating
+    RatingResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        timestamp:
+          type: string
+        locationName:
+          type: string
+        productId:
+          type: string
+        rating:
+          type: integer
+        userId:
+          type: string
+        userNotes:
+          type: string
+      xml:
+        name: Rating
