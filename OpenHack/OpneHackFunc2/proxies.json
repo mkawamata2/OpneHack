@@ -19,11 +19,23 @@
       },
       "backendUri": "https://serverlessohlondonuser.azurewebsites.net/api/GetUser?userId={userId}"
     },
-    "task4": {
+    "task4-CreateRating": {
       "matchCondition": {
-        "route": "/openhack-19/task4/{functionNameAndQueryParameter}"
+        "route": "/openhack-19/task4/CreateRating"
       },
-      "backendUri": "https://task2-api-evaluation.azurewebsites.net/api/{functionNameAndQueryParameter}"
+      "backendUri": "https://task2-api-evaluation.azurewebsites.net/api/CreateRating"
+    },
+    "task4-GetRating": {
+      "matchCondition": {
+        "route": "/openhack-19/task4/GetRating/{productId}"
+      },
+      "backendUri": "https://task2-api-evaluation.azurewebsites.net/api/GetRating?productId={productId}"
+    },
+    "task4-GetRatings": {
+      "matchCondition": {
+        "route": "/openhack-19/task4/GetRatings/{userId}"
+      },
+      "backendUri": "https://task2-api-evaluation.azurewebsites.net/api/GetRatings?userId={userId}"
     }
   }
 }
